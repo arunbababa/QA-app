@@ -73,3 +73,6 @@ TEXTs/
 *.ogg
 *.flac
 *.aac
+
+# FFmpeg static build
+ffmpeg-7.0.2-amd64-static/
