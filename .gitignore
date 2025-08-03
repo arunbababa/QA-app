@@ -1,0 +1,75 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# Vite cache
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.*.local
+.env.local
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+
+# Coverage
+coverage/
+
+# Misc
+*.log
+*.tgz
+*.zip
+
+# Next.js specific
+.next/
+.vercel/
+
+# Ignore media folders
+IMAGEs/
+VIDEOs/
+TEXTs/
+
+# Ignore common image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+*.webp
+*.ico
+
+# Ignore common video files
+*.mp4
+*.mov
+*.avi
+*.wmv
+*.flv
+*.mkv
+*.webm
+*.m4v
+
+# Ignore common audio files (optional)
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.aac
