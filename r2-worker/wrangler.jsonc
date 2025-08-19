@@ -1,0 +1,19 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "r2-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-08-05",
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "qa-app-data"
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "qa-metrics",
+			"database_id": "87e244bf-bc1c-4944-a446-6bcfdc4dde6c"
+		}
+	]
+}
