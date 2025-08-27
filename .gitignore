@@ -42,10 +42,16 @@ coverage/
 .next/
 .vercel/
 
-# Ignore media folders
+# Ignore media folders (repo-wide)
 IMAGEs/
 VIDEOs/
 TEXTs/
+
+# But DO track TypeScript source dirs with the same names under the frontend code
+!QA-front-using-manus/src/components/data/renderSource/IMAGEs
+!QA-front-using-manus/src/components/data/renderSource/IMAGEs/**
+!QA-front-using-manus/src/components/data/renderSource/VIDEOs
+!QA-front-using-manus/src/components/data/renderSource/VIDEOs/**
 
 # Ignore common image files
 *.png
