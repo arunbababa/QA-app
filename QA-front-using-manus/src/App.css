@@ -115,6 +115,39 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground text-base sm:text-lg;
+    line-height: 1.6;
+  }
+  
+  /* 基本的な文字サイズの改善 */
+  h1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
+  }
+  
+  h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl xl:text-4xl;
+  }
+  
+  h3 {
+    @apply text-lg sm:text-xl lg:text-2xl xl:text-3xl;
+  }
+  
+  p {
+    @apply text-base sm:text-lg lg:text-xl;
+  }
+  
+  /* リンクの改善 */
+  a {
+    @apply text-base sm:text-lg lg:text-xl;
+  }
+  
+  /* ボタンの改善 */
+  button {
+    @apply text-base sm:text-lg lg:text-xl;
+  }
+  
+  /* カードの改善 */
+  .card {
+    @apply p-4 sm:p-6 lg:p-8;
   }
 }
