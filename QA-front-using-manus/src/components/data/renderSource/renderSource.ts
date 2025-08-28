@@ -1,5 +1,5 @@
-import png from "./IMAGEs";
-import mp4 from "./VIDEOs";
+import png from "./IMAGEs/PNGs";
+import mp4 from "./VIDEOs/MP4";
 
 const fileSources = {
   png,

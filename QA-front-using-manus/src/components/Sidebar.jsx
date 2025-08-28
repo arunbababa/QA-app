@@ -38,7 +38,7 @@ const Sidebar = () => {
         <>
             <div className="w-full">
                 <div className="space-y-6 sm:space-y-8 lg:space-y-10">
-                    {/* Sample Videos Section */}
+                    {/*  動画形式ファイルセクション */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-6">
                             <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">動画形式のファイル</CardTitle>
@@ -59,7 +59,7 @@ const Sidebar = () => {
                         </CardContent>
                     </Card>
 
-                    {/* Sample Images Section */}
+                    {/* 画像形式ファイルセクション */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-6">
                             <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">画像形式のファイル</CardTitle>
@@ -80,7 +80,7 @@ const Sidebar = () => {
                         </CardContent>
                     </Card>
 
-                    {/* Sample Files Section */}
+                    {/* いろんな形式のファイルセクション */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-6">
                             <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">様々な形式のファイル</CardTitle>
@@ -95,7 +95,7 @@ const Sidebar = () => {
                         </CardContent>
                     </Card>
 
-                    {/* Download Statistics */}
+                    {/* ダウンロード統計情報 */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-6">
                             <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300 flex items-center space-x-3 sm:space-x-4">
