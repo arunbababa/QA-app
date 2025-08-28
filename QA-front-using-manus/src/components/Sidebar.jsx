@@ -50,11 +50,11 @@ const Sidebar = () => {
                             </div>
                             <div className="flex items-center space-x-3 sm:space-x-4">
                                 <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded"></div>
-                                <a href="#" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">FLV</a>
+                                <Link to="/videos/flv" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">FLV</Link>
                             </div>
                             <div className="flex items-center space-x-3 sm:space-x-4">
                                 <div className="w-5 h-5 sm:w-6 sm:h-6 bg-purple-500 rounded"></div>
-                                <Link to="/videos/mkv" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">MKV</Link>
+                                <Link to="/videos/avi" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">AVI</Link>
                             </div>
                         </CardContent>
                     </Card>
@@ -66,15 +66,15 @@ const Sidebar = () => {
                         </CardHeader>
                         <CardContent className="space-y-3 sm:space-y-4">
                             <div className="flex items-center space-x-3 sm:space-x-4">
-                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-red-500 rounded"></div>
-                                <Link to="/images/jpeg" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">JPEG</Link>
+                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 rounded"></div>
+                                <Link to="/images/jpg" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">JPG</Link>
                             </div>
                             <div className="flex items-center space-x-3 sm:space-x-4">
-                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 rounded"></div>
+                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded"></div>
                                 <Link to="/images/png" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">PNG</Link>
                             </div>
                             <div className="flex items-center space-x-3 sm:space-x-4">
-                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-yellow-500 rounded"></div>
+                                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-purple-500 rounded"></div>
                                 <Link to="/images/gif" className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">GIF</Link>
                             </div>
                         </CardContent>

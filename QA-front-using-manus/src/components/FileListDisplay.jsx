@@ -11,7 +11,7 @@ const FileListDisplay = () => {
   const { fileFormat } = useParams()
   const currentData = fileSources[fileFormat]
   const IconComponent = currentData.icon
-  
+
   const API = "https://r2-worker.hatuki-1-gzs.workers.dev";
   const [downloadCount, setDownloadCount] = useState()
   useEffect(() => {
@@ -53,12 +53,12 @@ const FileListDisplay = () => {
         </Badge>
       </div>
 
-      {/* 統計情報 */}
+      {/* ファイル数 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         <Card className="p-4 sm:p-6 lg:p-8">
           <CardContent className="p-0">
             <div className="flex items-center space-x-3 sm:space-x-4">
-              <File className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-blue-600" />
+              <File className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-${currentData.color}-600`} />
               <div>
                 {/* 配列の要素数カウントで置き換え */}
                 <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400">ファイル数</p>
@@ -67,10 +67,12 @@ const FileListDisplay = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* ダウンロード数 */}
         <Card className="p-4 sm:p-6 lg:p-8">
           <CardContent className="p-0">
             <div className="flex items-center space-x-3 sm:space-x-4">
-              <Download className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-orange-600" />
+              <Download className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-${currentData.color}-600`} />
               <div>
                 {/* DB最後らへんに作成 */}
                 <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400">ダウンロード数</p>
