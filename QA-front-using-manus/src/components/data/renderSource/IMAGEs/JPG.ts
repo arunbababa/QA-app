@@ -10,9 +10,9 @@ const jpeg = {
         ...Array.from({ length: 100 }, (_, i) => {
             const mb = i + 1; // 最初のインデックスは0のため
             return [
-                { name: `${(mb - 0.1).toFixed(1)}MB.jpg`, size: `${(mb - 0.1).toFixed(1)} MB`, path: `IMAGEs/JPEGs/${mb}/${(mb - 0.1).toFixed(1)}MB.jpg` },
-                { name: `${mb.toFixed(1)}MB.jpg`, size: `${mb.toFixed(1)} MB`, path: `IMAGEs/JPEGs/${mb}/${mb.toFixed(1)}MB.jpg` },
-                { name: `${(mb + 0.1).toFixed(1)}MB.jpg`, size: `${(mb + 0.1).toFixed(1)} MB`, path: `IMAGEs/JPEGs/${mb}/${(mb + 0.1).toFixed(1)}MB.jpg` },
+                { name: `${(mb - 0.1).toFixed(1)}MB.jpg`, size: `${(mb - 0.1).toFixed(1)} MB`, path: `IMAGEs/JPGs/${mb}/${(mb - 0.1).toFixed(1)}MB.jpg` },
+                { name: `${mb.toFixed(1)}MB.jpg`, size: `${mb.toFixed(1)} MB`, path: `IMAGEs/JPGs/${mb}/${mb.toFixed(1)}MB.jpg` },
+                { name: `${(mb + 0.1).toFixed(1)}MB.jpg`, size: `${(mb + 0.1).toFixed(1)} MB`, path: `IMAGEs/JPGs/${mb}/${(mb + 0.1).toFixed(1)}MB.jpg` },
             ];
         }).flat()
     ]

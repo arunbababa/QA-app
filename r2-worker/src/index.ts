@@ -18,39 +18,39 @@ function corsHeaders(request: Request, allowAll = false) {
 
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-		const url = new URL(request.url); // searchParamsメソッドの恩恵を受けるため
-		const key = url.searchParams.get("key");
+		const url = new URL(request.url);
+		const key_from_URLparam = url.searchParams.get("key");
 
-		if (!key) {
-			return new Response("Missing 'key'", {
+		if (key_from_URLparam === null) {
+			return new Response("keyが空です。リクエストAPIのkeyクエリを確認してください", {
 				status: 400,
-				headers: corsHeaders(request, true), // CORSヘッダーを追加
+				headers: corsHeaders(request, true)
 			});
 		}
 
 		// ファイルアップロード時用の処理です。詳しくはプロジェクト内の適当なshファイルを参照してください。
-		if (request.method === "POST" && key !== "metrics/downloads/increment") { // 後半の条件分岐いる?→いる、下のPOSTの時と分別するため、でも関心分離ができていないので他の条件分岐にした方がgood、例えば && key == "downloadsCount" の判定をするなど
+		if (request.method === "POST" && key_from_URLparam !== "metrics/downloads/increment") { // 後半の条件分岐いる?→いる、下のPOSTの時と分別するため、でも関心分離ができていないので他の条件分岐にした方がgood、例えば && key == "downloadsCount" の判定をするなど
 			const token = request.headers.get("X-Upload-Token");
 			if (!token || token !== env.UPLOAD_TOKEN)
-				return new Response("Unauthorized: アップロードトークンが正しくありません。", { status: 401, headers: corsHeaders(request, true) });
+				return new Response("不正アクセス: アップロードトークンが正しくありません。", { status: 401, headers: corsHeaders(request, true) });
 			try {
 				const contentType = request.headers.get("content-type") ?? undefined;
 				const body = await request.arrayBuffer();
-				await env.MY_BUCKET.put(key, body, {
+				await env.MY_BUCKET.put(key_from_URLparam, body, {
 					httpMetadata: { contentType },
 				});
-				const uploaded = await env.MY_BUCKET.get(key)
+				const uploaded = await env.MY_BUCKET.get(key_from_URLparam)
 				if (!uploaded) {
 					throw new Error("アップロードファイルの取得に失敗しました。正常にアップロードできていない可能性があります。")
 				}
-				return new Response(`wranglerによるアップロードが正常完了しました: ${key}`, { headers: corsHeaders(request, true) });
+				return new Response(`wranglerによるアップロードが正常完了しました: ${key_from_URLparam}`, { headers: corsHeaders(request, true) });
 			} catch (e) {
 				return new Response((e as Error).message, { status: 500, headers: corsHeaders(request, true) })
 			}
 		}
 
 		// 各ダウンロードボタン押印時の処理用
-		if (request.method === "POST" && key === "metrics/downloads/increment") {
+		if (request.method === "POST" && key_from_URLparam === "metrics/downloads/increment") {
 			try {
 				const contentType = request.headers.get('content-type') || '';
 				let fileType = '';
@@ -81,7 +81,7 @@ export default {
 		}
 
 		// 初回レンダリング用
-		if (request.method === "GET" && key === "metrics/downloads") {
+		if (request.method === "GET" && key_from_URLparam === "metrics/downloads") {
 			try {
 				const fileType = (url.searchParams.get("file_type") || "").toUpperCase();
 				// 一旦all用の分岐を作る 要修正
@@ -123,11 +123,11 @@ export default {
 
 		if (request.method === "GET") {
 			try {
-				const object = await env.MY_BUCKET.get(key);
+				const object = await env.MY_BUCKET.get(key_from_URLparam);
 				if (!object) {
 					return new Response("Not Found", { status: 404, headers: corsHeaders(request, true) });
 				}
-				const filename = key.split('/')?.pop() || 'download';
+				const filename = key_from_URLparam.split('/')?.pop() || 'download';
 				const contentType = object.httpMetadata?.contentType
 					|| (filename.endsWith('.png') ? 'image/png'
 						: filename.endsWith('.mp4') ? 'video/mp4'
