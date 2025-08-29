@@ -21,6 +21,21 @@ export default {
 		const url = new URL(request.url);
 		const key_from_URLparam = url.searchParams.get("key");
 
+		// CORS preflight (OPTIONS): return 2xx and echo requested headers/method
+		if (request.method === "OPTIONS") {
+			const reqHeaders = request.headers.get('Access-Control-Request-Headers') || '';
+			const reqMethod = request.headers.get('Access-Control-Request-Method') || '';
+			return new Response(null, {
+				status: 204,
+				headers: {
+					...corsHeaders(request, true),
+					'Access-Control-Allow-Methods': reqMethod || 'GET,POST,OPTIONS',
+					'Access-Control-Allow-Headers': reqHeaders || 'Content-Type, X-Upload-Token',
+					'Vary': 'Origin, Access-Control-Request-Headers, Access-Control-Request-Method',
+				},
+			});
+		}
+
 		if (key_from_URLparam === null) {
 			return new Response("keyが空です。リクエストAPIのkeyクエリを確認してください", {
 				status: 400,
@@ -49,7 +64,7 @@ export default {
 			}
 		}
 
-		// 各ダウンロードボタン押印時の処理用
+		// 各ダウンロードボタン押印時の処理用 これGETじゃね？
 		if (request.method === "POST" && key_from_URLparam === "metrics/downloads/increment") {
 			try {
 				const contentType = request.headers.get('content-type') || '';
