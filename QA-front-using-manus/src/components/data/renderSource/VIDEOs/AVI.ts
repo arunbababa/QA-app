@@ -10,9 +10,9 @@ const avi = {
         ...Array.from({ length: 100 }, (_, i) => {
             const mb = i + 1; // 最初のインデックスは0のため
             return [
-                { name: `${(mb - 0.1).toFixed(1)}MB.avi`, size: `${(mb - 0.1).toFixed(1)} MB`, path: `VIDEOs/AVI/${mb}/${(mb - 0.1).toFixed(1)}MB.avi` },
-                { name: `${mb.toFixed(1)}MB.avi`, size: `${mb.toFixed(1)} MB`, path: `VIDEOs/AVI/${mb}/${mb.toFixed(1)}MB.avi` },
-                { name: `${(mb + 0.1).toFixed(1)}MB.avi`, size: `${(mb + 0.1).toFixed(1)} MB`, path: `VIDEOs/AVI/${mb}/${(mb + 0.1).toFixed(1)}MB.avi` },
+                { name: `${(mb - 0.1).toFixed(1)}MB.avi`, size: `${(mb - 0.1).toFixed(1)} MB`, path: `VIDEOs/AVIs/${mb}/${(mb - 0.1).toFixed(1)}MB.avi` },
+                { name: `${mb.toFixed(1)}MB.avi`, size: `${mb.toFixed(1)} MB`, path: `VIDEOs/AVIs/${mb}/${mb.toFixed(1)}MB.avi` },
+                { name: `${(mb + 0.1).toFixed(1)}MB.avi`, size: `${(mb + 0.1).toFixed(1)} MB`, path: `VIDEOs/AVIs/${mb}/${(mb + 0.1).toFixed(1)}MB.avi` },
             ];
         }).flat()
     ]
