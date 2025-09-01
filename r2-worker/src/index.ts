@@ -4,7 +4,7 @@ export interface Env {
 	DB: D1Database
 }
 
-function corsHeaders(request: Request, allowAll = false) {
+function corsHeaders(request: Request) {
 	const origin = request.headers.get("Origin");
 	const allowOrigin = origin || "*"; // 常にOriginをエコー。未指定時のみ"*"
 	return {
@@ -28,7 +28,7 @@ export default {
 			return new Response(null, {
 				status: 204,
 				headers: {
-					...corsHeaders(request, true),
+					...corsHeaders(request),
 					'Access-Control-Allow-Methods': reqMethod || 'GET,POST,OPTIONS',
 					'Access-Control-Allow-Headers': reqHeaders || 'Content-Type, X-Upload-Token',
 					'Vary': 'Origin, Access-Control-Request-Headers, Access-Control-Request-Method',
@@ -39,7 +39,7 @@ export default {
 		if (key_from_URLparam === null) {
 			return new Response("keyが空です。リクエストAPIのkeyクエリを確認してください", {
 				status: 400,
-				headers: corsHeaders(request, true)
+				headers: corsHeaders(request)
 			});
 		}
 
@@ -47,7 +47,16 @@ export default {
 		if (request.method === "POST" && key_from_URLparam !== "metrics/downloads/increment") { // 後半の条件分岐いる?→いる、下のPOSTの時と分別するため、でも関心分離ができていないので他の条件分岐にした方がgood、例えば && key == "downloadsCount" の判定をするなど
 			const token = request.headers.get("X-Upload-Token");
 			if (!token || token !== env.UPLOAD_TOKEN)
-				return new Response("不正アクセス: アップロードトークンが正しくありません。", { status: 401, headers: corsHeaders(request, true) });
+				return new Response("不正アクセス: アップロードトークンが正しくありません。", { status: 401, headers: corsHeaders(request) });
+
+			const contentFileSize = request.headers.get("content-length")
+			if (contentFileSize && parseInt(contentFileSize) > 100 * 1024 * 1024) {
+				return new Response("file is too large, it couldnt uploaded", {
+					status: 403,
+					headers: corsHeaders(request)
+				})
+			}
+
 			try {
 				const contentType = request.headers.get("content-type") ?? undefined;
 				const body = await request.arrayBuffer();
@@ -58,13 +67,13 @@ export default {
 				if (!uploaded) {
 					throw new Error("アップロードファイルの取得に失敗しました。正常にアップロードできていない可能性があります。")
 				}
-				return new Response(`wranglerによるアップロードが正常完了しました: ${key_from_URLparam}`, { headers: corsHeaders(request, true) });
+				return new Response(`wranglerによるアップロードが正常完了しました: ${key_from_URLparam}`, { headers: corsHeaders(request) });
 			} catch (e) {
-				return new Response((e as Error).message, { status: 500, headers: corsHeaders(request, true) })
+				return new Response((e as Error).message, { status: 500, headers: corsHeaders(request) })
 			}
 		}
 
-		// 各ダウンロードボタン押印時の処理用 これGETじゃね？
+		// 各ダウンロードボタン押印時の処理用 これGETじゃね？m→違うなこれはD1へのカウントアップの処理だ navigator brobでデフォルトでPOSTだからそれを受け取る
 		if (request.method === "POST" && key_from_URLparam === "metrics/downloads/increment") {
 			try {
 				const contentType = request.headers.get('content-type') || '';
@@ -76,7 +85,7 @@ export default {
 					fileType = (url.searchParams.get('file_type') || '').toUpperCase();
 				}
 				if (!fileType) {
-					return new Response(JSON.stringify({ error: 'file_type is required' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders(request, true) } });
+					return new Response(JSON.stringify({ error: 'file_type is required' }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders(request) } });
 				}
 
 				// UPSERT 的に存在確認→更新/挿入
@@ -89,9 +98,9 @@ export default {
 				}
 				const latest = await tx.prepare("SELECT download_count FROM file_downloads WHERE file_type = ?").bind(fileType).first<{ download_count?: number }>();
 				const downloadCount = latest?.download_count ?? 0;
-				return new Response(JSON.stringify({ fileType, downloadCount }), { headers: { 'Content-Type': 'application/json', ...corsHeaders(request, true) } });
+				return new Response(JSON.stringify({ fileType, downloadCount }), { headers: { 'Content-Type': 'application/json', ...corsHeaders(request) } });
 			} catch (e) {
-				return new Response(JSON.stringify({ error: (e as Error).message }), { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders(request, true) } });
+				return new Response(JSON.stringify({ error: (e as Error).message }), { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders(request) } });
 			}
 		}
 
@@ -117,7 +126,7 @@ export default {
 					console.log('Calculated sumDownloadCount:', sumDownloadCount);
 
 					return new Response(JSON.stringify({ fileType, sumDownloadCount }), {
-						headers: { "Content-Type": "application/json", ...corsHeaders(request, true) },
+						headers: { "Content-Type": "application/json", ...corsHeaders(request) },
 					});
 				}
 				const result = await env.DB.prepare(
@@ -126,21 +135,22 @@ export default {
 				const rows = (result as unknown as { results?: Array<{ download_count?: number }> }).results || [];
 				const downloadCount = rows[0]?.download_count ?? 0;
 				return new Response(JSON.stringify({ fileType, downloadCount }), {
-					headers: { "Content-Type": "application/json", ...corsHeaders(request, true) },
+					headers: { "Content-Type": "application/json", ...corsHeaders(request) },
 				});
 			} catch (e) {
 				return new Response(JSON.stringify({ error: (e as Error).message }), {
 					status: 500,
-					headers: { "Content-Type": "application/json", ...corsHeaders(request, true) },
+					headers: { "Content-Type": "application/json", ...corsHeaders(request) },
 				});
 			}
 		}
 
+		// aタグについているhrefを受け取っている
 		if (request.method === "GET") {
 			try {
 				const object = await env.MY_BUCKET.get(key_from_URLparam);
 				if (!object) {
-					return new Response("Not Found", { status: 404, headers: corsHeaders(request, true) });
+					return new Response("Not Found", { status: 404, headers: corsHeaders(request) });
 				}
 				const filename = key_from_URLparam.split('/')?.pop() || 'download';
 				const contentType = object.httpMetadata?.contentType
@@ -148,19 +158,19 @@ export default {
 						: filename.endsWith('.mp4') ? 'video/mp4'
 							: 'application/octet-stream');
 				const headers = {
-					...corsHeaders(request, true),
+					...corsHeaders(request),
 					"Content-Type": contentType,
 					"Content-Disposition": `attachment; filename*=UTF-8''${encodeURIComponent(filename)}`,
 				};
 				return new Response(object.body, { headers });
 			} catch (e) {
-				return new Response((e as Error).message, { status: 500, headers: corsHeaders(request, true) });
+				return new Response((e as Error).message, { status: 500, headers: corsHeaders(request) });
 			}
 		}
 
 		return new Response("Not Found", {
 			status: 404,
-			headers: corsHeaders(request, true), // CORSヘッダーを追加
+			headers: corsHeaders(request), // CORSヘッダーを追加
 		});
 	},
 };

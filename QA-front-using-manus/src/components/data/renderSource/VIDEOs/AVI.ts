@@ -1,9 +1,9 @@
-import { ImageIcon } from "lucide-react";
+import { FileVideo } from "lucide-react";
 
 const avi = {
     title: 'AVI 動画ファイル',
     description: 'AVI形式の動画ファイルをダウンロードできます。境界値テストにも使えるよう、各1~100MBサイズのファイルの+-0.1MBまでご用意しております。',
-    icon: ImageIcon,
+    icon: FileVideo,
     color: 'purple',
     files: [
         // 1MB～100MBまで、各MBごとに0.9MB, 1.0MB, 1.1MB

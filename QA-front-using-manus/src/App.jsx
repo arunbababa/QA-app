@@ -29,7 +29,7 @@ function App() {
                 <Route path="/" element={<PrivacyPolicyPage />} />
                 <Route path="/videos/:fileFormat" element={<FileListDisplay />} />
                 <Route path="/images/:fileFormat" element={<FileListDisplay />} />
-                <Route path="/:fileFormat" element={<FileListDisplay />} />
+                <Route path="/archives/:fileFormat" element={<FileListDisplay />} />
               </Routes>
             </div>
           </div>

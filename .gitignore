@@ -41,11 +41,18 @@ coverage/
 # Next.js specific
 .next/
 .vercel/
+r2-worker/
 
 # Ignore media folders (repo-wide)
 IMAGEs/
 VIDEOs/
 TEXTs/
+ARCHIVEs/
+CSVFiles/
+PPTs/
+XLSs/
+PPTxFiles/
+ZIPs/
 
 # But DO track TypeScript source dirs with the same names under the frontend code
 !QA-front-using-manus/src/components/data/renderSource/IMAGEs

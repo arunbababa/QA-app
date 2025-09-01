@@ -1,14 +1,15 @@
 #!/bin/bash
 
-# DATA配下の全ファイルを直列でアップロード
+# PDF専用（ARCHIVEs/PDFs配下の*.pdfのみ）を直列でアップロード
 # 失敗時は最大3回まで再試行（指数バックオフ）
 # 使い方:
-#   bash upload_allfile_under_DATA.sh
+#   bash upload_pdfs.sh
 
 set -euo pipefail
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 DATA_ROOT="/home/arunbababa/Dev/QA-app/DATA"
+PDF_DIR="$DATA_ROOT/ARCHIVEs/PDFs"
 WORKER_URL="https://r2-worker.hatuki-1-gzs.workers.dev"
 
 # .env からトークン（プロジェクト直下を想定）
@@ -16,37 +17,15 @@ WORKER_URL="https://r2-worker.hatuki-1-gzs.workers.dev"
 [ -f "$DIR/.env" ] && source "$DIR/.env"
 : "${UPLOAD_TOKEN:?Set UPLOAD_TOKEN in .env}"
 
-# Content-Typeを自動判定する関数
-get_content_type() {
-    local file="$1"
-    local extension="${file##*.}"
-    
-    case "${extension,,}" in
-        "csv") echo "text/csv" ;;
-        "pdf") echo "application/pdf" ;;
-        "zip") echo "application/zip" ;;
-        "xlsx"|"xls") echo "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ;;
-        "txt"|"md"|"log") echo "text/plain" ;;
-        "jpg"|"jpeg") echo "image/jpeg" ;;
-        "png") echo "image/png" ;;
-        "gif") echo "image/gif" ;;
-        "mp4") echo "video/mp4" ;;
-        "avi") echo "video/x-msvideo" ;;
-        "flv") echo "video/x-flv" ;;
-        *) echo "application/octet-stream" ;;
-    esac
-}
-
-find "$DATA_ROOT" -type f | while read -r file; do
+find "$PDF_DIR" -type f -iname "*.pdf" | while read -r file; do
   key=$(realpath --relative-to="$DATA_ROOT" "$file")
-  content_type=$(get_content_type "$file")
-  echo "📤 アップロード中: $key (Content-Type: $content_type)"
+  echo "📤 アップロード中: $key"
   
   # 最大3回まで再試行
   for attempt in {1..3}; do
     if curl --http1.1 -sS --fail -X POST "$WORKER_URL?key=$key" \
       -H "X-Upload-Token: $UPLOAD_TOKEN" \
-      -H "Content-Type: $content_type" \
+      -H "Content-Type: application/pdf" \
       --data-binary "@$file"; then
       echo "✅ 完了: $key (試行回数: $attempt)"
       break  # 成功したらループを抜ける
@@ -54,7 +33,7 @@ find "$DATA_ROOT" -type f | while read -r file; do
       echo "❌ 失敗: $key (試行回数: $attempt/3)" >&2
       
       if [ $attempt -lt 3 ]; then
-        wait_time=$((15 ** (attempt - 1)))  # 1, 2, 4秒
+        wait_time=$((2 ** (attempt - 1)))  # 1, 2, 4秒
         echo "⏳ ${wait_time}秒待機して再試行..."
         sleep $wait_time
       else
