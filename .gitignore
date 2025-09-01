@@ -44,15 +44,7 @@ coverage/
 r2-worker/
 
 # Ignore media folders (repo-wide)
-IMAGEs/
-VIDEOs/
-TEXTs/
-ARCHIVEs/
-CSVFiles/
-PPTs/
-XLSs/
-PPTxFiles/
-ZIPs/
+DATA/
 
 # But DO track TypeScript source dirs with the same names under the frontend code
 !QA-front-using-manus/src/components/data/renderSource/IMAGEs
@@ -83,10 +75,8 @@ ZIPs/
 
 # Ignore common audio files (optional)
 *.mp3
+*.csv
 *.wav
 *.ogg
 *.flac
 *.aac
-
-# FFmpeg static build
-ffmpeg-7.0.2-amd64-static/
