@@ -44,13 +44,17 @@ const FileListDisplay = () => {
             <IconComponent className={`w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-${currentData.color}-600`} />
             <span>{currentData.title}</span>
           </h1>
-          <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400 mt-3 sm:mt-4 max-w-2xl">
-            {currentData.description}
-          </p>
+          <div>
+            {currentData.description.split('。').map((sentence, index) => (
+              <p key={index} className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400 sm:mb-0 sm:mt-3 max-w-2xl">
+                <span>{sentence}</span>
+              </p>
+            ))}
+          </div>
         </div>
-        <Badge variant="outline" className="text-base sm:text-lg lg:text-xl px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 self-start sm:self-auto">
+        {/* <Badge variant="outline" className="text-base sm:text-lg lg:text-xl px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 self-start sm:self-auto">
           {fileFormat?.toUpperCase()}
-        </Badge>
+        </Badge> */}
       </div>
 
       {/* ファイル数 */}

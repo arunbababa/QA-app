@@ -26,7 +26,9 @@ function App() {
             {/* Main Content: メインコンテンツエリア */}
             <div className="md:col-span-3 lg:col-span-4 order-2 md:order-2">
               <Routes>
-                <Route path="/" element={<PrivacyPolicyPage />} />
+                {/* これなくして使用方法とライセンスを入れる */}
+                {/* <Route path="/" element={<PrivacyPolicyPage />} /> */}
+                <Route path="/" element={<UseageAndLicense />} />
                 <Route path="/videos/:fileFormat" element={<FileListDisplay />} />
                 <Route path="/images/:fileFormat" element={<FileListDisplay />} />
                 <Route path="/archives/:fileFormat" element={<FileListDisplay />} />
