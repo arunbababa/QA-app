@@ -86,7 +86,7 @@ const Sidebar = () => {
                             <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">様々な形式のファイル</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3 sm:space-y-4">
-                            {['CSV', 'PDF', 'Text', 'XLS', 'ZIP'].map((type) => ( // べた書き修正
+                            {['CSV', 'PDF', 'Text'].map((type) => ( // べた書き修正
                                 <div key={type} className="flex items-center space-x-3 sm:space-x-4">
                                     <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-slate-500" />
                                     <Link to={`/archives/${type.toLowerCase()}`} className="text-base sm:text-lg lg:text-xl text-slate-600 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400">{type}</Link>

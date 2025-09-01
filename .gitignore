@@ -59,6 +59,7 @@ ZIPs/
 !QA-front-using-manus/src/components/data/renderSource/IMAGEs/**
 !QA-front-using-manus/src/components/data/renderSource/VIDEOs
 !QA-front-using-manus/src/components/data/renderSource/VIDEOs/**
+!QA-front-using-manus/src/components/data/renderSource/ARCHIVEs/**
 
 # Ignore common image files
 *.png
