@@ -26,7 +26,7 @@ const Header = () => {
                             <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                                 <Shield className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
                             </div>
-                            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-slate-900 dark:text-white">Sample files</h1>
+                            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-slate-900 dark:text-white">Sample files hub</h1>
                         </Link>
                     </div>
                     <nav className="flex space-x-4 sm:space-x-6 lg:space-x-8 mr-12">
