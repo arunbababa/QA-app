@@ -41,7 +41,7 @@ const Sidebar = () => {
                     {/*  動画形式ファイルセクション */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-0">
-                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">動画形式</CardTitle>
+                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">動画</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3 sm:space-y-4">
                             <div className="flex items-center space-x-3 sm:space-x-4">
@@ -62,7 +62,7 @@ const Sidebar = () => {
                     {/* 画像形式ファイルセクション */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-0">
-                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">画像形式</CardTitle>
+                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">画像</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3 sm:space-y-4">
                             <div className="flex items-center space-x-3 sm:space-x-4">
