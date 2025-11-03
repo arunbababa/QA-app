@@ -1,18 +1,18 @@
 import { Shield } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
-import { Badge } from './ui/badge'
+import { Badge } from './ui/badge.jsx'
 
 const Header = () => {
     const location = useLocation()
 
-    const getPageTitle = () => {
+    const getPageTitle = (): string => {
         if (location.pathname.startsWith('/videos/')) {
             const format = location.pathname.split('/')[2]
-            return `${format?.toUpperCase()} Videos`
+            return `${format?.toUpperCase() ?? ''} Videos`
         }
         if (location.pathname.startsWith('/images/')) {
             const format = location.pathname.split('/')[2]
-            return `${format?.toUpperCase()} Images`
+            return `${format?.toUpperCase() ?? ''} Images`
         }
         return 'Privacy Policy'
     }
@@ -42,3 +42,4 @@ const Header = () => {
 }
 
 export default Header
+

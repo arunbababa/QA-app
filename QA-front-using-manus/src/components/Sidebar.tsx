@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import '../App.css'
 import { Link } from 'react-router-dom'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card.jsx'
+import { Badge } from '@/components/ui/badge.jsx'
 import { FileText, BarChart3 } from 'lucide-react'
 import UseageAndLicense from './UseageAndLicense'
+import type { DownloadMetricsResponse } from '@/types'
 
 const Sidebar = () => {
     // Temporary static value, replace with your logic if needed
     const API = "https://r2-worker.hatuki-1-gzs.workers.dev";
-    const [sumDownloadCount, setSumDownloadCount] = useState()
+    const [sumDownloadCount, setSumDownloadCount] = useState<number | undefined>(undefined)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`${API}?key=metrics/downloads&file_type=all`);
-                const data = await response.json();
+                const data: DownloadMetricsResponse = await response.json();
                 console.log(data)
                 let count = 0;
                 if (typeof data?.sumDownloadCount === 'number') {
                     count = data.sumDownloadCount;
                 } else if (Array.isArray(data?.results) && typeof data.results[0]?.download_count === 'number') {
-                    count = data.results[0].sumDownloadCount;
+                    count = data.results[0].sumDownloadCount ?? 0;
                 } else if (Array.isArray(data) && typeof data[0]?.sumDownloadCount === 'number') {
                     count = data[0].sumDownloadCount;
                 }
@@ -41,7 +42,7 @@ const Sidebar = () => {
                     {/*  動画形式ファイルセクション */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-0">
-                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">動画形式</CardTitle>
+                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">動画</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3 sm:space-y-4">
                             <div className="flex items-center space-x-3 sm:space-x-4">
@@ -62,7 +63,7 @@ const Sidebar = () => {
                     {/* 画像形式ファイルセクション */}
                     <Card className="p-4 sm:p-6 lg:p-8">
                         <CardHeader className="pb-4 sm:pb-0">
-                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">画像形式</CardTitle>
+                            <CardTitle className="text-lg sm:text-xl lg:text-2xl font-semibold text-slate-700 dark:text-slate-300">画像</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3 sm:space-y-4">
                             <div className="flex items-center space-x-3 sm:space-x-4">
@@ -131,3 +132,4 @@ const Sidebar = () => {
 }
 
 export default Sidebar
+
