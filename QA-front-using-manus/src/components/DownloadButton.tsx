@@ -1,18 +1,21 @@
 import React from "react";
 import { Button } from '@/components/ui/button.jsx'
 import { Download } from 'lucide-react'
+import type { DownloadButtonProps } from '@/types'
 
 // これグローバルに置こうかな、stateではなくただの定数として
 const API = "https://r2-worker.hatuki-1-gzs.workers.dev";
 
-const DownloadButton = React.memo(({ file, fileFormat, onIncrement }) => {
+const DownloadButton = React.memo<DownloadButtonProps>(({ file, fileFormat, onIncrement }) => {
   const href = `${API}?key=${file.path}`;
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     // 楽観的更新のため先にUI更新
     onIncrement?.();
 
     // 送信は非同期で実行（ダウンロードはアンカーのデフォルト動作で継続）
+    // これに対するreponseとして
+    // (r2-worker/src/index.tsをチェック ←r2-workerっておかしいなworkerでいいはず)
     try {
       const body = JSON.stringify({ file_type: String(fileFormat || '').toUpperCase() });
       navigator.sendBeacon?.(
@@ -32,4 +35,7 @@ const DownloadButton = React.memo(({ file, fileFormat, onIncrement }) => {
   );
 });
 
+DownloadButton.displayName = 'DownloadButton';
+
 export default DownloadButton
+

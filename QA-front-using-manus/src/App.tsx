@@ -1,16 +1,10 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
-import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
-import { Separator } from '@/components/ui/separator.jsx'
-import { Shield, Eye, Cookie, Users, Lock, Mail, ExternalLink, BarChart3, FileText, Download, SidebarClose } from 'lucide-react'
-import FileListDisplay from './components/FileListDisplay.jsx'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import FileListDisplay from './components/FileListDisplay'
 import './App.css'
-import Sidebar from './components/Sidebar.jsx'
-import Header from './components/Header.jsx'
-import PrivacyPolicyPage from './components/PrivacyPolicy.jsx'
-import UseageAndLicense from './components/UseageAndLicense.jsx'
+import Sidebar from './components/Sidebar'
+import Header from './components/Header'
+import PrivacyPolicyPage from './components/PrivacyPolicy'
+import UseageAndLicense from './components/UseageAndLicense'
 
 function App() {
   return (

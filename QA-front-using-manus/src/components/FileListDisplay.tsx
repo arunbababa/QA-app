@@ -6,19 +6,21 @@ import { Badge } from '@/components/ui/badge.jsx'
 import { Download, FileVideo, Image as ImageIcon, File, HardDrive, Monitor, Smartphone, Tablet } from 'lucide-react'
 import fileSources from './data/renderSource/renderSource'
 import DownloadButton from './DownloadButton'
+import type { DownloadMetricsResponse } from '@/types'
 
 const FileListDisplay = () => {
-  const { fileFormat } = useParams()
-  const currentData = fileSources[fileFormat]
-  const IconComponent = currentData.icon
+  const { fileFormat } = useParams<{ fileFormat?: string }>()
+  const currentData = fileSources[fileFormat as keyof typeof fileSources]
+  const IconComponent = currentData?.icon
 
   const API = "https://r2-worker.hatuki-1-gzs.workers.dev";
-  const [downloadCount, setDownloadCount] = useState()
+  const [downloadCount, setDownloadCount] = useState<number | undefined>(undefined)
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${API}?key=metrics/downloads&file_type=${fileFormat?.toUpperCase()}`);
-        const data = await response.json();
+        const data: DownloadMetricsResponse = await response.json();
         let count = 0;
         if (typeof data?.downloadCount === 'number') {
           count = data.downloadCount;
@@ -34,6 +36,10 @@ const FileListDisplay = () => {
     }
     fetchData();
   }, [fileFormat]) // カウントステートが変わった際にはこちらは走らない
+
+  if (!currentData || !IconComponent) {
+    return <div>ファイル形式が見つかりません</div>;
+  }
 
   return (
     <div className="w-full p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 lg:space-y-10">
@@ -108,7 +114,7 @@ const FileListDisplay = () => {
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <DownloadButton file={file} fileFormat={fileFormat} onIncrement={() => setDownloadCount((c) => c + 1)} />
+                    <DownloadButton file={file} fileFormat={fileFormat} onIncrement={() => setDownloadCount((c) => (c ?? 0) + 1)} />
                   </div>
                 </div>
               )

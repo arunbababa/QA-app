@@ -1,9 +1,9 @@
 import { Badge, BarChart3, Cookie, Download, ExternalLink, Eye, Lock, Mail, Shield, Users } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { Separator } from "./ui/separator"
-import { Button } from "./ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card.jsx"
+import { Separator } from "./ui/separator.jsx"
+import { Button } from "./ui/button.jsx"
 
-const  PrivacyPolicyPage = () => {
+const PrivacyPolicyPage = () => {
     // const [downloadCount] = useState(3558603)
 
     return (
@@ -185,3 +185,4 @@ const  PrivacyPolicyPage = () => {
 }
 
 export default PrivacyPolicyPage
+
